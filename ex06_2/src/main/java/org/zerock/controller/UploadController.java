@@ -43,22 +43,22 @@ public class UploadController {
 	@GetMapping("/uploadForm")
 	public void uploadForm() {
 		logger.info("upload form accepted");
-		log.info("upload form");
+		logger.info("upload form");
 	}
 
 	@PostMapping("/uploadFormAction")
 	public void uploadFormPost(MultipartFile[] uploadFile, Model model) {
 		String uploadFolder = "C:\\upload";
 		for (MultipartFile multipartFile : uploadFile) {
-			log.info("-------------------------------------");
-			log.info("Upload File Name: " + multipartFile.getOriginalFilename());
-			log.info("Upload File Size: " + multipartFile.getSize());
+			logger.info("-------------------------------------");
+			logger.info("Upload File Name: {}", multipartFile.getOriginalFilename());
+			logger.info("Upload File Size: {}", multipartFile.getSize());
 
 			File saveFile = new File(uploadFolder, multipartFile.getOriginalFilename());
 			try {
 				multipartFile.transferTo(saveFile);
 			} catch (Exception e) {
-				log.error(e.getMessage());
+				logger.error(e.getMessage());
 			} // end catch
 		} // end for
 	}
@@ -66,7 +66,7 @@ public class UploadController {
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/uploadAjax")
 	public void uploadAjax() {
-		log.info("upload ajax");
+		logger.info("upload ajax");
 	}
 	
 	private String getFolder() {
@@ -106,7 +106,7 @@ public class UploadController {
 			
 			// IE has file path
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
-			log.info("only file name: " + uploadFileName);
+			logger.info("only file name: {}", uploadFileName);
 			attachDTO.setFileName(uploadFileName);
 			UUID uuid = UUID.randomUUID();
 			uploadFileName = uuid.toString() + "_" + uploadFileName;
@@ -140,10 +140,10 @@ public class UploadController {
 	@GetMapping("/display")
 	@ResponseBody
 	public ResponseEntity<byte[]> getFile(String fileName) {
-		log.info("fileName: " + fileName);
+		logger.info("fileName: {}", fileName);
 		File file = new File("c:\\upload\\" + fileName);
 
-		log.info("file: " + file);
+		logger.info("file: {}", file);
 		ResponseEntity<byte[]> result = null;
 
 		try {
@@ -193,7 +193,7 @@ public class UploadController {
 	@PostMapping("/deleteFile")
 	@ResponseBody
 	public ResponseEntity<String> deleteFile(String fileName, String type) {
-		log.info("deleteFile: " + fileName);
+		logger.info("deleteFile: {}", fileName);
 		File file;
 		
 		try {
@@ -202,7 +202,7 @@ public class UploadController {
 
 			if (type.equals("image")) {
 				String largeFileName = file.getAbsolutePath().replace("s_", "");
-				log.info("largeFileName: " + largeFileName);
+				logger.info("largeFileName: {}", largeFileName);
 				
 				file = new File(largeFileName);
 				file.delete();

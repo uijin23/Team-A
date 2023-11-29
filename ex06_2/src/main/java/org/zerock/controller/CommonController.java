@@ -17,14 +17,14 @@ public class CommonController {
 
 	@GetMapping("/accessError")
 	public void accessDenied(Authentication auth, Model model) {
-		log.info("access Denied : " + auth);
+		logger.info("access Denied : {}" + auth);
 		model.addAttribute("msg", "Access Denied");
 	}
 
 	@GetMapping("/customLogin")
 	public void loginInput(String error, String logout, Model model) {
-		log.info("error: " + error);
-		log.info("logout: " + logout);
+		logger.info("error: {}", error);
+		logger.info("logout: {}", logout);
 		
 		if (error != null) {
 			model.addAttribute("error", "Login Error Check Your Account");
@@ -37,11 +37,11 @@ public class CommonController {
 
 	@GetMapping("/customLogout")
 	public void logoutGET() {
-		log.info("custom logout");
+		logger.info("custom logout");
 	}
 
 	@PostMapping("/customLogout")
 	public void logoutPost() {
-		log.info("post custom logout");
+		logger.info("post custom logout");
 	}
 }
