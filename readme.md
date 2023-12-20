@@ -3,4 +3,4 @@
 spring boot
 - myBatis
 - JDBC
-- 
+- Ajax
